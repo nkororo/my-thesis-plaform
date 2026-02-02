@@ -1,70 +1,51 @@
-# Getting Started with Create React App
+# MyThesis Platform - Academic Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![React](https://img.shields.io/badge/Frontend-React_18-blue)
+![JSON Server](https://img.shields.io/badge/Backend-JSON_Server-lightgrey)
+![JavaScript](https://img.shields.io/badge/Language-JavaScript_(ES6+)-yellow)
+![EdTech](https://img.shields.io/badge/Status-Educational_MVP-orange)
 
-## Available Scripts
+**MyThesis Platform** este un sistem de asistență digitală destinat gestionării fluxului de lucrări de licență și disertație.
+Proiectul rezolvă probleme administrative critice precum lipsa de vizibilitate asupra progresului studenților și dificultatea gestionării istoricului temelor (arhivare vs. oferte active).
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Funcționalități Cheie
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* **Management Ciclu de Viață:** Gestionarea completă a temelor, de la stadiul de *Propunere (Disponibilă)* la *Alocată* și în final *Arhivată (Finalizată)*.
+* **Arhivare Inteligentă (Read-Only):** Separarea logică a ofertei curente de istoricul anilor anteriori. Temele finalizate devin automat inactive (`pointer-events: none`) și vizuale distinct (`opacity`), prevenind modificările accidentale.
+* **Monitorizare Progres:** Sistem granular de urmărire a etapelor (faze) pentru fiecare student, permițând profesorului să aprobe sau să solicite revizuiri pentru documente.
+* **Filtrare Hibridă:** Motor de căutare complex care combină filtrarea după *Status* (Active/Finalizate), *Text* (Titlu/Descriere) și *ID Student*, asigurând o navigare rapidă prin baza de date.
+* **Dashboard Statistici:** Calcularea și vizualizarea în timp real a metricilor cheie: numărul de studenți activi vs. absolvenți și media notelor pe promoții.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Interfață & Flux de Lucru
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Platforma oferă o experiență de utilizare fluidă, cu o delimitare clară între datele operaționale și cele istorice.
 
-### `npm run build`
+| Dashboard Profesor | Management Teme (Tab-uri) | Monitorizare Studenți |
+| :---: | :---: | :---: |
+| ![Teme](images/thesis.png) | ![Studenti](images/students.png) | ![Cereri](requests.png) |
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Stack Tehnic
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* **Limbaj:** JavaScript (ES6+)
+* **Frontend:**
+    * `React.js`: Arhitectură bazată pe componente funcționale și Hooks (`useState`, `useEffect`).
+    * `React Router`: Navigare tip SPA (Single Page Application).
+    * `CSS Modules`: Stilizare izolată pentru prevenirea conflictelor vizuale.
+* **Backend (Mock):**
+    * `JSON Server`: API RESTful complet pentru persistența datelor (`students`, `theses`, `requests`).
+* **Algoritmi:** Logică custom pentru maparea studenților pe teme (ID Matching) și filtrarea dinamică a listelor.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Cum funcționează
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1.  **Inițializare & Sincronizare:** La încărcare, aplicația execută cereri paralele (`Promise.all`) către endpoint-urile `/theses` și `/students` pentru a construi starea completă a aplicației.
+2.  **Logica de Arhivare:** Sistemul detectează automat statusul temei (`completed`). Dacă aceasta este finalizată, este randată exclusiv în Tab-ul "Arhivă", unde interacțiunea este blocată programatic.
+3.  **Mapare Semantică:** ID-urile numerice din baza de date sunt traduse în timp real în informații lisibile pentru utilizator (ex: `studentID: 101` devine "Alexandru Munteanu" pe cardul temei).
+4.  **Procesare Progres:** Fiecare etapă a studentului (ex: "Plan Cercetare") este validată prin existența unui fișier atașat înainte de a permite schimbarea statusului în "Approved".
