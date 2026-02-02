@@ -26,7 +26,7 @@ Platforma oferă o experiență de utilizare fluidă, cu o delimitare clară în
 
 | Dashboard Profesor | Management Teme (Tab-uri) | Monitorizare Studenți |
 | :---: | :---: | :---: |
-| ![Teme](images/thesis.png) | ![Studenti](images/students.png) | ![Cereri](requests.png) |
+| ![Teme](thesis.png) | ![Studenti](students.png) | ![Cereri](requests.png) |
 
 ---
 
